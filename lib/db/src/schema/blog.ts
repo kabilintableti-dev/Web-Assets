@@ -13,6 +13,7 @@ export const blogPostsTable = pgTable("blog_posts", {
   author: text("author").notNull().default("Eskiz Akademi"),
   readingTime: text("reading_time").default("5 dk"),
   published: boolean("published").notNull().default(true),
+  featured: boolean("featured").notNull().default(false),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
