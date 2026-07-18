@@ -1,15 +1,16 @@
-# [Project name]
+# Eskiz Akademi
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+A Turkish art & drawing academy website with a blog, gallery, instructors, and an admin panel for managing blog posts.
 
 ## Run & Operate
 
-- `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
+- **Frontend** — workflow "Eskiz Akademi": `PORT=5173 BASE_PATH=/ pnpm --filter @workspace/eskiz-akademi run dev` (port 5173)
+- **API** — workflow "API Server": `PORT=8080 pnpm --filter @workspace/api-server run dev` (port 8080)
 - `pnpm run typecheck` — full typecheck across all packages
 - `pnpm run build` — typecheck + build all packages
 - `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
 - `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
+- Required env: `DATABASE_URL` — Postgres connection string (auto-provisioned by Replit)
 
 ## Stack
 
