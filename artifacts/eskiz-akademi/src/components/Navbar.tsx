@@ -17,11 +17,12 @@ export function Navbar() {
 
   const navLinks = [
     { label: 'Ana Sayfa', href: '/' },
-    { label: 'Eğitimler', href: '#egitimler' },
-    { label: 'Galeri', href: '#galeri' },
-    { label: 'Etkinlikler', href: '#etkinlikler' },
-    { label: 'Hakkımızda', href: '#hakkimizda' },
-    { label: 'İletişim', href: '#iletisim' },
+    { label: 'Eğitimler', href: '/#egitimler' },
+    { label: 'Galeri', href: '/#galeri' },
+    { label: 'Etkinlikler', href: '/#etkinlikler' },
+    { label: 'Blog', href: '/blog' },
+    { label: 'Hakkımızda', href: '/#hakkimizda' },
+    { label: 'İletişim', href: '/#iletisim' },
   ];
 
   return (
@@ -40,13 +41,23 @@ export function Navbar() {
 
           <nav className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                className="text-sm font-manrope tracking-wider hover:text-eskiz-gold transition-colors text-eskiz-light/80 hover:text-eskiz-gold"
-              >
-                {link.label}
-              </a>
+              link.href.startsWith('/#') || link.href === '/' ? (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  className="text-sm font-manrope tracking-wider hover:text-eskiz-gold transition-colors text-eskiz-light/80"
+                >
+                  {link.label}
+                </a>
+              ) : (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  className="text-sm font-manrope tracking-wider hover:text-eskiz-gold transition-colors text-eskiz-light/80"
+                >
+                  {link.label}
+                </Link>
+              )
             ))}
             <a
               href="https://wa.me/905074736314"
@@ -83,17 +94,35 @@ export function Navbar() {
             </button>
             <div className="flex flex-col items-center gap-8">
               {navLinks.map((link, i) => (
-                <motion.a
-                  key={link.label}
-                  href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                  className="text-2xl font-serif text-eskiz-light hover:text-eskiz-gold transition-colors"
-                >
-                  {link.label}
-                </motion.a>
+                link.href.startsWith('/#') || link.href === '/' ? (
+                  <motion.a
+                    key={link.label}
+                    href={link.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.1 }}
+                    className="text-2xl font-serif text-eskiz-light hover:text-eskiz-gold transition-colors"
+                  >
+                    {link.label}
+                  </motion.a>
+                ) : (
+                  <Link
+                    key={link.label}
+                    href={link.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="text-2xl font-serif text-eskiz-light hover:text-eskiz-gold transition-colors"
+                  >
+                    <motion.span
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.1 }}
+                      className="block"
+                    >
+                      {link.label}
+                    </motion.span>
+                  </Link>
+                )
               ))}
               <motion.a
                 href="https://wa.me/905074736314"

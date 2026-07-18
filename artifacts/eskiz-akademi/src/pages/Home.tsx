@@ -8,6 +8,7 @@ import { Events } from '@/components/Events';
 import { StudentWorks } from '@/components/StudentWorks';
 import { Achievements } from '@/components/Achievements';
 import { Instructors } from '@/components/Instructors';
+import { BlogSection } from '@/components/BlogSection';
 import { ContactCTA } from '@/components/ContactCTA';
 import { Contact } from '@/components/Contact';
 import { Footer } from '@/components/Footer';
@@ -26,6 +27,7 @@ export default function Home() {
       <StudentWorks />
       <Achievements />
       <Instructors />
+      <BlogSection />
       <ContactCTA />
       <Contact />
       <Footer />
