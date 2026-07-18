@@ -1,83 +1,60 @@
 import React from 'react';
+import { Instagram, MessageCircle } from 'lucide-react';
 
-export const Footer = () => {
+export function Footer() {
   return (
-    <footer className="bg-[#111111] border-t-4 border-eskiz-gold/10 pt-20 pb-8 px-6 lg:px-16">
-      <div className="max-w-[1200px] mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-16">
+    <footer className="bg-[#050505] border-t-2 border-eskiz-gold pt-20 pb-8 text-eskiz-light/80 font-sans">
+      <div className="container mx-auto px-6 md:px-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
           
           {/* Brand */}
-          <div className="lg:col-span-1">
-            <a href="#anasayfa" className="flex flex-col items-start leading-none gap-1 mb-4 inline-block">
-              <span className="font-serif text-2xl font-bold text-eskiz-light tracking-tight">
-                Eskiz
-              </span>
-              <span className="font-sans text-[9px] tracking-[0.25em] text-eskiz-gold uppercase font-bold">
-                Akademi
-              </span>
-            </a>
-            <p className="font-sans text-sm text-eskiz-light/50 leading-relaxed max-w-[250px]">
-              Güzel Sanatlar Hazırlık Atölyesi. Disiplin, zanaat ve vizyon.
+          <div className="flex flex-col">
+            <h2 className="font-serif italic text-3xl text-eskiz-gold mb-4">Eskiz Akademi</h2>
+            <p className="font-light leading-relaxed max-w-sm mb-6">
+              İstanbul'un en seçkin güzel sanatlar hazırlık akademisi. Yeteneğini keşfet, geleceğini inşa et.
             </p>
+            <div className="flex gap-4">
+              <a href="https://instagram.com/eskizakademi" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:border-eskiz-gold hover:text-eskiz-gold transition-all">
+                <Instagram size={18} />
+              </a>
+              <a href="https://wa.me/905074736314" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:border-eskiz-gold hover:text-eskiz-gold transition-all">
+                <MessageCircle size={18} />
+              </a>
+            </div>
           </div>
 
           {/* Links */}
-          <div>
-            <h4 className="font-sans text-[10px] tracking-widest text-eskiz-gold uppercase font-bold mb-6">
-              Akademi
-            </h4>
-            <ul className="space-y-3">
-              {['Hakkımızda', 'Eğitmenler', 'Programlar', 'Başarılar', 'Galeri'].map((link) => (
-                <li key={link}>
-                  <a href={`#${link.toLowerCase().replace('ı', 'i')}`} className="font-sans text-sm text-eskiz-light/50 hover:text-eskiz-gold transition-colors">
-                    {link}
-                  </a>
-                </li>
-              ))}
-            </ul>
+          <div className="flex flex-col md:items-center">
+            <div>
+              <h3 className="font-manrope text-white font-semibold tracking-wider uppercase mb-6 text-sm">Hızlı Linkler</h3>
+              <ul className="space-y-4 font-light">
+                <li><a href="#egitimler" className="hover:text-eskiz-gold transition-colors">Eğitim Programları</a></li>
+                <li><a href="#galeri" className="hover:text-eskiz-gold transition-colors">Galeri & Atölye</a></li>
+                <li><a href="#etkinlikler" className="hover:text-eskiz-gold transition-colors">Etkinlikler</a></li>
+                <li><a href="#iletisim" className="hover:text-eskiz-gold transition-colors">İletişim & Başvuru</a></li>
+              </ul>
+            </div>
           </div>
 
           {/* Contact */}
-          <div>
-            <h4 className="font-sans text-[10px] tracking-widest text-eskiz-gold uppercase font-bold mb-6">
-              İletişim
-            </h4>
-            <ul className="space-y-3 font-sans text-sm text-eskiz-light/50">
-              <li>+90 (5xx) xxx xx xx</li>
-              <li>info@eskizakademi.com</li>
-              <li>Kadıköy, İstanbul</li>
-            </ul>
-          </div>
-
-          {/* Socials */}
-          <div>
-            <h4 className="font-sans text-[10px] tracking-widest text-eskiz-gold uppercase font-bold mb-6">
-              Sosyal
-            </h4>
-            <ul className="space-y-3 font-sans text-sm text-eskiz-light/50">
-              <li>
-                <a href="#" className="hover:text-eskiz-gold transition-colors">Instagram</a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-eskiz-gold transition-colors">YouTube</a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-eskiz-gold transition-colors">TikTok</a>
-              </li>
-            </ul>
+          <div className="flex flex-col md:items-end text-left md:text-right">
+            <div>
+              <h3 className="font-manrope text-white font-semibold tracking-wider uppercase mb-6 text-sm">İletişim</h3>
+              <ul className="space-y-4 font-light">
+                <li><a href="tel:05074736314" className="hover:text-eskiz-gold transition-colors text-lg">0507 473 63 14</a></li>
+                <li><a href="tel:02242538121" className="hover:text-eskiz-gold transition-colors text-lg">0224 253 81 21</a></li>
+                <li className="mt-4 text-sm opacity-60">İstanbul, Türkiye</li>
+              </ul>
+            </div>
           </div>
 
         </div>
 
-        <div className="pt-8 border-t border-eskiz-light/10 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="font-sans text-[11px] text-eskiz-light/30 tracking-wider">
-            © 2026 Eskiz Akademi. Tüm hakları saklıdır.
-          </p>
-          <p className="font-sans text-[11px] text-eskiz-light/30 tracking-wider">
-            Designed for Excellence
-          </p>
+        <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-sm font-light opacity-60">
+          <p>© {new Date().getFullYear()} Eskiz Akademi. Tüm hakları saklıdır.</p>
+          <p className="mt-2 md:mt-0">Sanatın Geleceğini Tasarla</p>
         </div>
       </div>
     </footer>
   );
-};
+}

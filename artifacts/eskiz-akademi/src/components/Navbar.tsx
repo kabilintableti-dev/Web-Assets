@@ -1,20 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'wouter';
+import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, MessageCircle } from 'lucide-react';
 
-const navLinks = [
-  { label: 'Anasayfa', href: '#anasayfa' },
-  { label: 'Hakkımızda', href: '#hakkimizda' },
-  { label: 'Eğitmenler', href: '#egitmenler' },
-  { label: 'Programlar', href: '#programlar' },
-  { label: 'Başarılar', href: '#basarilar' },
-  { label: 'Galeri', href: '#galeri' },
-  { label: 'İletişim', href: '#iletisim' },
-];
-
-export const Navbar = () => {
+export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,107 +15,102 @@ export const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
-    setOpen(false);
-    const target = document.querySelector(href);
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  const navLinks = [
+    { label: 'Ana Sayfa', href: '/' },
+    { label: 'Eğitimler', href: '#egitimler' },
+    { label: 'Galeri', href: '#galeri' },
+    { label: 'Etkinlikler', href: '#etkinlikler' },
+    { label: 'Hakkımızda', href: '#hakkimizda' },
+    { label: 'İletişim', href: '#iletisim' },
+  ];
 
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-[32px] w-full z-40 transition-all duration-500 ${
           scrolled
-            ? 'bg-eskiz-dark/95 backdrop-blur-md border-b border-eskiz-gold/15 py-4'
+            ? 'backdrop-blur-md bg-black/60 border-b border-eskiz-gold/30 py-4'
             : 'bg-transparent py-6'
         }`}
       >
-        <div className="max-w-[1200px] mx-auto px-6 md:px-8 flex items-center justify-between">
-          <a
-            href="#anasayfa"
-            onClick={(e) => handleNavClick(e, '#anasayfa')}
-            className="group flex flex-col items-start leading-none gap-1"
-          >
-            <span className="font-serif text-2xl font-bold text-eskiz-light tracking-tight group-hover:text-eskiz-gold transition-colors">
-              Eskiz
-            </span>
-            <span className="font-sans text-[9px] tracking-[0.25em] text-eskiz-gold uppercase font-bold">
-              Akademi
-            </span>
-          </a>
+        <div className="container mx-auto px-6 md:px-12 flex items-center justify-between">
+          <Link href="/" className="font-serif italic text-2xl text-eskiz-gold">
+            Eskiz Akademi
+          </Link>
 
-          {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
-                onClick={(e) => handleNavClick(e, link.href)}
-                className="font-sans text-[13px] text-eskiz-light/75 hover:text-eskiz-gold tracking-wide transition-colors"
+                className="text-sm font-manrope tracking-wider hover:text-eskiz-gold transition-colors text-eskiz-light/80 hover:text-eskiz-gold"
               >
                 {link.label}
               </a>
             ))}
-          </nav>
-
-          <div className="hidden lg:flex items-center">
             <a
-              href="https://wa.me/905XXXXXXXXX"
+              href="https://wa.me/905074736314"
               target="_blank"
               rel="noreferrer"
-              className="flex items-center gap-2 bg-eskiz-gold text-white font-sans text-[13px] font-bold tracking-wide px-5 py-2.5 rounded hover:bg-eskiz-gold/80 transition-all active:scale-95"
+              className="bg-eskiz-gold text-eskiz-dark px-5 py-2 rounded-full font-manrope text-sm font-bold tracking-wide hover:scale-105 hover:shadow-[0_0_15px_rgba(199,163,93,0.4)] transition-all"
             >
-              <MessageCircle size={16} />
               WhatsApp
             </a>
-          </div>
+          </nav>
 
-          {/* Mobile Menu Toggle */}
           <button
-            className="lg:hidden text-eskiz-light"
-            onClick={() => setOpen(!open)}
+            className="md:hidden text-eskiz-light"
+            onClick={() => setMobileMenuOpen(true)}
           >
-            {open ? <X size={28} /> : <Menu size={28} />}
+            <Menu size={28} />
           </button>
         </div>
       </header>
 
-      {/* Mobile Nav Overlay */}
       <AnimatePresence>
-        {open && (
+        {mobileMenuOpen && (
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 z-40 bg-eskiz-dark pt-24 px-6 pb-6 overflow-y-auto"
+            className="fixed inset-0 z-50 bg-eskiz-dark flex flex-col items-center justify-center p-6"
           >
-            <div className="flex flex-col gap-6">
-              {navLinks.map((link) => (
-                <a
+            <button
+              className="absolute top-8 right-6 text-eskiz-light p-2"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <X size={32} />
+            </button>
+            <div className="flex flex-col items-center gap-8">
+              {navLinks.map((link, i) => (
+                <motion.a
                   key={link.label}
                   href={link.href}
-                  onClick={(e) => handleNavClick(e, link.href)}
-                  className="font-sans text-xl text-eskiz-light border-b border-white/5 pb-4"
+                  onClick={() => setMobileMenuOpen(false)}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  className="text-2xl font-serif text-eskiz-light hover:text-eskiz-gold transition-colors"
                 >
                   {link.label}
-                </a>
+                </motion.a>
               ))}
-              <a
-                href="https://wa.me/905XXXXXXXXX"
+              <motion.a
+                href="https://wa.me/905074736314"
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center justify-center gap-2 bg-eskiz-gold text-white font-sans text-lg font-bold tracking-wide px-5 py-4 rounded mt-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: navLinks.length * 0.1 }}
+                className="mt-8 bg-eskiz-gold text-eskiz-dark px-8 py-4 rounded-full font-manrope text-lg font-bold tracking-wide"
+                onClick={() => setMobileMenuOpen(false)}
               >
-                <MessageCircle size={20} />
-                WhatsApp ile İletişim
-              </a>
+                WhatsApp İletişim
+              </motion.a>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
     </>
   );
-};
+}

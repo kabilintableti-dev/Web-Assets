@@ -1,24 +1,32 @@
 import React from 'react';
 import { Navbar } from '@/components/Navbar';
 import { Hero } from '@/components/Hero';
-import { About } from '@/components/About';
-import { Instructors } from '@/components/Instructors';
+import { WhyUs } from '@/components/WhyUs';
 import { Programs } from '@/components/Programs';
-import { Achievements } from '@/components/Achievements';
 import { Gallery } from '@/components/Gallery';
+import { Events } from '@/components/Events';
+import { StudentWorks } from '@/components/StudentWorks';
+import { Achievements } from '@/components/Achievements';
+import { Instructors } from '@/components/Instructors';
+import { ContactCTA } from '@/components/ContactCTA';
 import { Contact } from '@/components/Contact';
 import { Footer } from '@/components/Footer';
+import { AnnouncementBar } from '@/components/AnnouncementBar';
 
 export default function Home() {
   return (
     <div className="w-full bg-eskiz-dark text-eskiz-light overflow-x-hidden">
+      <AnnouncementBar />
       <Navbar />
       <Hero />
-      <About />
-      <Instructors />
+      <WhyUs />
       <Programs />
-      <Achievements />
       <Gallery />
+      <Events />
+      <StudentWorks />
+      <Achievements />
+      <Instructors />
+      <ContactCTA />
       <Contact />
       <Footer />
     </div>

@@ -1,88 +1,71 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-import img1 from '@assets/7411_1784376803140.jpg';
-import img2 from '@assets/7400_1784376803158.jpg';
-import img3 from '@assets/7407_1784376803154.jpg';
-import img4 from '@assets/7408_1784376803148.jpg';
+import inst1 from '@assets/7400_1784376803158.jpg';
+import inst2 from '@assets/7401_1784376803163.jpg';
 
 const instructors = [
   {
-    name: "Deniz Aksoy",
-    role: "Kurucu Eğitmen · Resim",
-    bio: "Mimar Sinan GSF mezunu, 14 yıllık sınav hazırlık tecrübesi.",
-    img: img1,
+    name: "Selin Aktaş",
+    role: "Güzel Sanatlar Bölümü Mezunu",
+    exp: "10 Yıllık Deneyim",
+    img: inst1
   },
   {
-    name: "Selin Erdoğan",
-    role: "Desen & Kompozisyon",
-    bio: "Hacettepe GSF, karakalem ve figür çalışmalarında uzman.",
-    img: img2,
-  },
-  {
-    name: "Onur Baykal",
-    role: "Grafik & İmgesel Tasarım",
-    bio: "Endüstri deneyimli sanat yönetmeni, portfolyo danışmanı.",
-    img: img3,
-  },
-  {
-    name: "Mert Yavaş",
-    role: "Mimari & İç Mimarlık",
-    bio: "Teknik çizim ve mekansal tasarım derslerini yürütüyor.",
-    img: img4,
+    name: "Mert Yıldız",
+    role: "Mimar Sinan Güzel Sanatlar Üni.",
+    exp: "Ressam",
+    img: inst2
   }
 ];
 
-export const Instructors = () => {
+export function Instructors() {
   return (
-    <section id="egitmenler" className="py-24 lg:py-32 bg-black">
-      <div className="max-w-[1200px] mx-auto px-6 md:px-12 lg:px-16">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
+    <section className="py-24 md:py-32 bg-eskiz-dark relative">
+      <div className="container mx-auto px-6 md:px-12 max-w-5xl">
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-          className="mb-16 lg:mb-24"
+          transition={{ duration: 0.7 }}
+          className="mb-16 text-center"
         >
-          <p className="font-sans text-[10px] tracking-[0.3em] text-eskiz-gold uppercase font-bold mb-6">
-            — Akademik Kadro
-          </p>
-          <h2 className="font-serif text-[clamp(36px,5vw,64px)] font-bold text-eskiz-light leading-[1.1] tracking-tight">
-            Eğitmenler<span className="text-eskiz-gold">.</span>
-          </h2>
+          <h2 className="text-4xl md:text-5xl font-serif text-eskiz-light">Eğitmenlerimiz</h2>
+          <div className="w-24 h-1 bg-eskiz-gold mx-auto mt-6"></div>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
-          {instructors.map((ins, i) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+          {instructors.map((inst, i) => (
             <motion.div
-              key={ins.name}
+              key={i}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: i * 0.1 }}
-              className="group cursor-default"
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.7, delay: i * 0.2 }}
+              whileHover={{ rotateY: i === 0 ? 5 : -5, rotateX: 5 }}
+              style={{ perspective: 1000 }}
+              className="group cursor-pointer"
             >
-              <div className="relative aspect-[3/4] mb-6 overflow-hidden rounded-md bg-eskiz-dark">
-                <img
-                  src={ins.img}
-                  alt={ins.name}
-                  className="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105"
+              <div className="relative overflow-hidden rounded-xl mb-6 bg-[#1A1A1A] aspect-[3/4]">
+                <img 
+                  src={inst.img} 
+                  alt={inst.name}
+                  className="w-full h-full object-cover transition-all duration-700 filter grayscale group-hover:grayscale-0 group-hover:scale-105"
                 />
-                {/* Gold border reveal on hover */}
-                <div className="absolute inset-0 border-2 border-transparent group-hover:border-eskiz-gold/50 m-3 transition-all duration-500 rounded-sm pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-500" />
               </div>
-              
-              <h3 className="font-serif text-2xl font-bold text-eskiz-light mb-2">{ins.name}</h3>
-              <p className="font-sans text-[11px] tracking-widest text-eskiz-gold uppercase font-bold mb-4">
-                {ins.role}
-              </p>
-              <p className="font-sans text-sm text-eskiz-light/60 leading-relaxed">
-                {ins.bio}
-              </p>
+              <div className="text-center">
+                <h3 className="text-3xl font-serif text-eskiz-light mb-2 relative inline-block">
+                  {inst.name}
+                  <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-eskiz-gold group-hover:w-full transition-all duration-500"></div>
+                </h3>
+                <p className="font-sans text-eskiz-light/70 mt-4">{inst.role}</p>
+                <p className="font-manrope text-sm text-eskiz-gold tracking-widest uppercase mt-2">{inst.exp}</p>
+              </div>
             </motion.div>
           ))}
         </div>
       </div>
     </section>
   );
-};
+}

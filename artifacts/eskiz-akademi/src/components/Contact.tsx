@@ -1,212 +1,171 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Phone, Mail, MapPin } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { Instagram, Phone, MessageCircle, MapPin } from 'lucide-react';
 
-const programs = [
-  "Temel Sanat Eğitimi",
-  "Desen Eğitimi",
-  "İmgesel Tasarım",
-  "Güzel Sanatlar Hazırlık",
-  "Portfolyo Geliştirme"
-];
+const formSchema = z.object({
+  name: z.string().min(2, "Ad Soyad gerekli"),
+  phone: z.string().min(10, "Geçerli bir telefon numarası girin"),
+  program: z.string().min(1, "Lütfen bir program seçin"),
+  message: z.string().min(5, "Mesajınız çok kısa")
+});
 
-export const Contact = () => {
-  const [submitted, setSubmitted] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    phone: '',
-    email: '',
-    program: programs[0],
-    message: ''
+type FormData = z.infer<typeof formSchema>;
+
+export function Contact() {
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  const { register, handleSubmit, formState: { errors, isSubmitting }, reset } = useForm<FormData>({
+    resolver: zodResolver(formSchema)
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = async (data: FormData) => {
     // Simulate API call
-    setTimeout(() => {
-      setSubmitted(true);
-    }, 600);
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    setIsSuccess(true);
+    reset();
+    setTimeout(() => setIsSuccess(false), 5000);
   };
 
   return (
-    <section id="iletisim" className="py-24 lg:py-32 bg-eskiz-dark">
-      <div className="max-w-[1200px] mx-auto px-6 md:px-12 lg:px-16">
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
-          
-          {/* Left: Info */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
+    <section id="iletisim" className="py-24 md:py-32 bg-eskiz-dark relative border-t border-white/5">
+      <div className="container mx-auto px-6 md:px-12 max-w-6xl">
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.7 }}
+          className="mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-serif text-eskiz-light">İletişim</h2>
+          <div className="w-24 h-1 bg-eskiz-gold mt-6"></div>
+        </motion.div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+          {/* Info Side */}
+          <motion.div 
+            initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
+            className="space-y-12"
           >
-            <p className="font-sans text-[10px] tracking-[0.3em] text-eskiz-gold uppercase font-bold mb-6">
-              — İletişim
-            </p>
-            <h2 className="font-serif text-[clamp(36px,5vw,56px)] font-bold text-eskiz-light leading-[1.1] tracking-tight mb-8">
-              Geleceğin sanatçısı{"\n"}senin hikâyen olsun.
-            </h2>
-            
-            <div className="space-y-8 mt-12">
-              <a href="tel:+905XXXXXXXXX" className="flex items-center gap-4 text-eskiz-light/80 hover:text-eskiz-gold transition-colors group">
-                <div className="w-12 h-12 rounded-full border border-eskiz-light/10 flex items-center justify-center group-hover:border-eskiz-gold/30">
-                  <Phone size={20} />
-                </div>
-                <div>
-                  <div className="font-sans text-[10px] tracking-widest text-eskiz-light/40 uppercase mb-1">Telefon</div>
-                  <div className="font-sans text-lg">+90 (5xx) xxx xx xx</div>
-                </div>
-              </a>
-              
-              <a href="mailto:info@eskizakademi.com" className="flex items-center gap-4 text-eskiz-light/80 hover:text-eskiz-gold transition-colors group">
-                <div className="w-12 h-12 rounded-full border border-eskiz-light/10 flex items-center justify-center group-hover:border-eskiz-gold/30">
-                  <Mail size={20} />
-                </div>
-                <div>
-                  <div className="font-sans text-[10px] tracking-widest text-eskiz-light/40 uppercase mb-1">E-posta</div>
-                  <div className="font-sans text-lg">info@eskizakademi.com</div>
-                </div>
-              </a>
-
-              <div className="flex items-center gap-4 text-eskiz-light/80">
-                <div className="w-12 h-12 rounded-full border border-eskiz-light/10 flex items-center justify-center">
-                  <MapPin size={20} />
-                </div>
-                <div>
-                  <div className="font-sans text-[10px] tracking-widest text-eskiz-light/40 uppercase mb-1">Adres</div>
-                  <div className="font-sans text-lg">Kadıköy, İstanbul</div>
-                </div>
-              </div>
+            <div>
+              <h3 className="text-2xl font-serif text-eskiz-light mb-6">Bize Ulaşın</h3>
+              <p className="text-eskiz-light/70 font-sans font-light leading-relaxed mb-8 max-w-md">
+                Atölyemizi ziyaret edip tanışma dersimize katılmak veya programlar hakkında bilgi almak için iletişime geçebilirsiniz.
+              </p>
             </div>
 
-            <a
-              href="https://wa.me/905XXXXXXXXX"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center justify-center gap-2 bg-[#25D366] text-white font-sans text-sm font-bold tracking-widest uppercase px-8 py-4 rounded mt-12 hover:bg-[#20bd5a] transition-all active:scale-95"
-            >
-              WhatsApp'tan Yaz
-            </a>
+            <div className="space-y-6">
+              <a href="tel:05074736314" className="flex items-center gap-4 text-eskiz-light hover:text-eskiz-gold transition-colors group">
+                <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:border-eskiz-gold transition-colors">
+                  <Phone size={20} className="text-eskiz-gold" />
+                </div>
+                <span className="font-manrope text-lg tracking-wide">0507 473 63 14</span>
+              </a>
+              
+              <a href="tel:02242538121" className="flex items-center gap-4 text-eskiz-light hover:text-eskiz-gold transition-colors group">
+                <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:border-eskiz-gold transition-colors">
+                  <Phone size={20} className="text-eskiz-gold" />
+                </div>
+                <span className="font-manrope text-lg tracking-wide">0224 253 81 21</span>
+              </a>
+
+              <a href="https://wa.me/905074736314" target="_blank" rel="noreferrer" className="flex items-center gap-4 text-eskiz-light hover:text-eskiz-gold transition-colors group">
+                <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:border-eskiz-gold transition-colors bg-[#25D366]/10">
+                  <MessageCircle size={20} className="text-[#25D366]" />
+                </div>
+                <span className="font-manrope text-lg tracking-wide">WhatsApp'tan Yazın</span>
+              </a>
+
+              <a href="https://instagram.com/eskizakademi" target="_blank" rel="noreferrer" className="flex items-center gap-4 text-eskiz-light hover:text-eskiz-gold transition-colors group">
+                <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:border-eskiz-gold transition-colors">
+                  <Instagram size={20} className="text-eskiz-gold" />
+                </div>
+                <span className="font-manrope text-lg tracking-wide">@eskizakademi</span>
+              </a>
+            </div>
           </motion.div>
 
-          {/* Right: Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
+          {/* Form Side */}
+          <motion.div 
+            initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="bg-eskiz-light/5 border border-eskiz-light/10 p-8 lg:p-12 rounded-xl"
+            transition={{ duration: 0.7 }}
+            className="bg-eskiz-card p-8 md:p-10 rounded-2xl border border-white/5"
           >
-            {submitted ? (
-              <motion.div 
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="h-full min-h-[400px] flex flex-col items-center justify-center text-center"
-              >
-                <div className="w-20 h-20 bg-eskiz-gold rounded-full flex items-center justify-center text-eskiz-dark mb-6">
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinelinejoin="round">
-                    <polyline points="20 6 9 17 4 12" />
+            <h3 className="text-2xl font-serif text-eskiz-light mb-8">Bilgi Alın</h3>
+            
+            {isSuccess ? (
+              <div className="h-full min-h-[300px] flex flex-col items-center justify-center text-center">
+                <div className="w-16 h-16 rounded-full bg-green-500/20 text-green-500 flex items-center justify-center mb-4">
+                  <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <h3 className="font-serif text-3xl font-bold text-eskiz-light mb-4">Kaydınız alındı</h3>
-                <p className="text-eskiz-light/60 font-sans">
-                  En kısa sürede sizinle iletişime geçeceğiz.
-                </p>
-              </motion.div>
+                <h4 className="text-xl font-serif text-eskiz-light mb-2">Mesajınız Alındı</h4>
+                <p className="text-eskiz-light/60 font-sans">En kısa sürede size dönüş yapacağız.</p>
+              </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <h3 className="font-serif text-2xl font-bold text-eskiz-light mb-8">Ön Kayıt Formu</h3>
-                
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 <div>
-                  <label className="block font-sans text-[10px] tracking-widest text-eskiz-light/50 uppercase mb-2">
-                    Ad Soyad
-                  </label>
                   <input
-                    required
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    type="text"
-                    className="w-full bg-transparent border-b border-eskiz-light/20 text-eskiz-light py-3 px-0 focus:outline-none focus:border-eskiz-gold transition-colors"
+                    {...register("name")}
+                    placeholder="Ad Soyad"
+                    className="w-full bg-transparent border-b border-white/20 px-0 py-3 text-eskiz-light focus:outline-none focus:border-eskiz-gold transition-colors placeholder:text-white/30 font-sans"
                   />
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block font-sans text-[10px] tracking-widest text-eskiz-light/50 uppercase mb-2">
-                      Telefon
-                    </label>
-                    <input
-                      required
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      type="tel"
-                      className="w-full bg-transparent border-b border-eskiz-light/20 text-eskiz-light py-3 px-0 focus:outline-none focus:border-eskiz-gold transition-colors"
-                    />
-                  </div>
-                  <div>
-                    <label className="block font-sans text-[10px] tracking-widest text-eskiz-light/50 uppercase mb-2">
-                      E-posta
-                    </label>
-                    <input
-                      required
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      type="email"
-                      className="w-full bg-transparent border-b border-eskiz-light/20 text-eskiz-light py-3 px-0 focus:outline-none focus:border-eskiz-gold transition-colors"
-                    />
-                  </div>
+                  {errors.name && <p className="text-red-400 text-xs mt-1">{errors.name.message}</p>}
                 </div>
 
                 <div>
-                  <label className="block font-sans text-[10px] tracking-widest text-eskiz-light/50 uppercase mb-2">
-                    Program Seçimi
-                  </label>
+                  <input
+                    {...register("phone")}
+                    placeholder="Telefon Numarası"
+                    className="w-full bg-transparent border-b border-white/20 px-0 py-3 text-eskiz-light focus:outline-none focus:border-eskiz-gold transition-colors placeholder:text-white/30 font-sans"
+                  />
+                  {errors.phone && <p className="text-red-400 text-xs mt-1">{errors.phone.message}</p>}
+                </div>
+
+                <div>
                   <select
-                    name="program"
-                    value={formData.program}
-                    onChange={handleChange}
-                    className="w-full bg-transparent border-b border-eskiz-light/20 text-eskiz-light py-3 px-0 focus:outline-none focus:border-eskiz-gold transition-colors appearance-none"
+                    {...register("program")}
+                    className="w-full bg-transparent border-b border-white/20 px-0 py-3 text-eskiz-light focus:outline-none focus:border-eskiz-gold transition-colors font-sans appearance-none"
                   >
-                    {programs.map(p => (
-                      <option key={p} value={p} className="bg-eskiz-dark text-eskiz-light">{p}</option>
-                    ))}
+                    <option value="" className="bg-eskiz-card">İlgilendiğiniz Program</option>
+                    <option value="hazirlik" className="bg-eskiz-card">Güzel Sanatlar Hazırlık</option>
+                    <option value="imgesel" className="bg-eskiz-card">İmgesel Desen</option>
+                    <option value="portfolyo" className="bg-eskiz-card">Portfolyo Hazırlık</option>
+                    <option value="diger" className="bg-eskiz-card">Diğer</option>
                   </select>
+                  {errors.program && <p className="text-red-400 text-xs mt-1">{errors.program.message}</p>}
                 </div>
 
                 <div>
-                  <label className="block font-sans text-[10px] tracking-widest text-eskiz-light/50 uppercase mb-2">
-                    Mesajınız
-                  </label>
                   <textarea
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    rows={3}
-                    className="w-full bg-transparent border-b border-eskiz-light/20 text-eskiz-light py-3 px-0 focus:outline-none focus:border-eskiz-gold transition-colors resize-none"
+                    {...register("message")}
+                    placeholder="Mesajınız"
+                    rows={4}
+                    className="w-full bg-transparent border-b border-white/20 px-0 py-3 text-eskiz-light focus:outline-none focus:border-eskiz-gold transition-colors placeholder:text-white/30 font-sans resize-none"
                   />
+                  {errors.message && <p className="text-red-400 text-xs mt-1">{errors.message.message}</p>}
                 </div>
 
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+                <button
                   type="submit"
-                  className="w-full bg-eskiz-gold text-eskiz-dark font-sans text-sm font-bold tracking-widest uppercase py-4 rounded mt-8 hover:bg-eskiz-light transition-colors"
+                  disabled={isSubmitting}
+                  className="w-full bg-eskiz-gold text-eskiz-dark py-4 rounded-full font-manrope font-bold tracking-wider hover:bg-white transition-colors disabled:opacity-50 mt-4"
                 >
-                  Gönder
-                </motion.button>
+                  {isSubmitting ? "GÖNDERİLİYOR..." : "GÖNDER"}
+                </button>
               </form>
             )}
           </motion.div>
-
         </div>
       </div>
     </section>
   );
-};
+}
